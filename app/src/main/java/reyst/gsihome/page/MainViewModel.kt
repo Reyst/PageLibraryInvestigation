@@ -15,4 +15,9 @@ class MainViewModel : ViewModel() {
         InfoDataSourceFactory(InfoStorage()),
         config
     ).build()
+
+    fun refreshList() {
+        pagedInfo.value?.dataSource?.invalidate()
+    }
+
 }

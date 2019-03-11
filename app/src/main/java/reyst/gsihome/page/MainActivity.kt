@@ -28,11 +28,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        srlMain.setOnRefreshListener { srlMain.isRefreshing = false }
+        srlMain.setOnRefreshListener { vmMain.refreshList() }
 
         rvMain.layoutManager = LinearLayoutManager(this)
         rvMain.adapter = adapter
-        vmMain.pagedInfo.observe(this, Observer { adapter.submitList(it) })
+        vmMain.pagedInfo.observe(this, Observer {
+            adapter.submitList(it)
+            srlMain.isRefreshing = false
+        })
     }
 }
 

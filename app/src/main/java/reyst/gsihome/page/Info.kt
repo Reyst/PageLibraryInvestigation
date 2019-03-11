@@ -25,18 +25,25 @@ class InfoDataSource(private val storage: InfoStorage): PositionalDataSource<Inf
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<Info>) {
         Log.d("INSPECT", "loadInitial, requestedStartPosition = ${params.requestedStartPosition}, requestedLoadSize = ${params.requestedLoadSize}")
-        val result = storage.getData(params.requestedStartPosition, params.requestedLoadSize)
+        Thread.sleep(3_000)
+        val result = storage.getInitialData(params.requestedLoadSize)
         callback.onResult(result, 0)
     }
 
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Info>) {
         Log.d("INSPECT", "loadRange, startPosition = ${params.startPosition}, loadSize = ${params.loadSize}")
+        Thread.sleep(1_000)
         val result = storage.getData(params.startPosition, params.loadSize)
         callback.onResult(result)
     }
 }
 
 class InfoStorage {
+
+    fun getInitialData(loadSize: Int): MutableList<Info> {
+        return getData(0, loadSize)
+    }
+
     fun getData(startPosition: Int, loadSize: Int): MutableList<Info> {
         val endPos = minOf(startPosition + loadSize - 1, 99)
         return (startPosition..endPos).map { Info(it + 1, "Info num ${it + 1}") } as MutableList<Info>
