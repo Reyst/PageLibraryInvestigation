@@ -38,7 +38,7 @@ class InfoDataSource(private val storage: InfoStorage): PositionalDataSource<Inf
 
 class InfoStorage {
     fun getData(startPosition: Int, loadSize: Int): MutableList<Info> {
-        val endPos = minOf(startPosition + loadSize + 1, 100)
+        val endPos = minOf(startPosition + loadSize - 1, 99)
         return (startPosition..endPos).map { Info(it + 1, "Info num ${it + 1}") } as MutableList<Info>
     }
 }

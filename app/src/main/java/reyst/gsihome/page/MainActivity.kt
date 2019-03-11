@@ -43,7 +43,7 @@ class InfoAdapter(itemDiffer: DiffUtil.ItemCallback<Info>) : PagedListAdapter<In
     }
 
     override fun onBindViewHolder(holder: InfoVH, position: Int) {
-        currentList?.get(position)?.also { holder.bind(it) }
+        getItem(position)?.also { holder.bind(it) }
     }
 
 }
